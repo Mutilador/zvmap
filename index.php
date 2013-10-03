@@ -91,7 +91,8 @@ if (is_numeric($x) && is_numeric($y) && x != 0 && y != 0) {
       	echo "title: 'Your Location'";
   	echo "});";
 }
-placeTreasureMarkers();
+//placeTreasureMarkers();
+drawMoongates();
 ?>
 }
 
