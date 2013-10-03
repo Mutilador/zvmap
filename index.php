@@ -83,13 +83,8 @@ include_once "/home/zenvera/public_html/map/api/functions.php";
 
 $x = intval($_GET['x']);
 $y = intval($_GET['y']);
-if (is_numeric($x) && is_numeric($y) && x != 0 && y != 0) {
-	list($lng, $lat) = convertToMC($x, $y);
-	echo "var marker = new google.maps.Marker({";
-      	echo "position: new google.maps.LatLng(" . $lat . "," . $lng . "),";
-      	echo "map: map,";
-      	echo "title: 'Your Location'";
-  	echo "});";
+if (is_numeric($x) && is_numeric($y) && $x != 0 && $y != 0) {
+	placeMarker($x,$y,"marker","Location");
 }
 //placeTreasureMarkers();
 drawMoongates();
