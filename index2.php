@@ -12,13 +12,13 @@ var feluccaTypeOptions = {
         return null;
       }
       var bound = Math.pow(2, zoom);
-      return 'https://zenvera.com/map/api/maptile.php?' +
+      return 'api/maptile.php?' +
           'z=' + zoom + '&x=' + normalizedCoord.x + '&y=' +
           (normalizedCoord.y);
   },
-  tileSize: new google.maps.Size(208, 208),
+  tileSize: new google.maps.Size(320, 256),
   maxZoom: 7,
-  minZoom: 2,
+  minZoom: 1,
   isPng: true,
   name: 'Felucca'
 };
@@ -26,16 +26,19 @@ var feluccaTypeOptions = {
 var feluccaMapType = new google.maps.ImageMapType(feluccaTypeOptions);
 
 		function EuclideanProjection() {
-			var EUCLIDEAN_RANGE = 208;
-			this.pixelOrigin_ = new google.maps.Point(EUCLIDEAN_RANGE / 2, EUCLIDEAN_RANGE / 2);
-			this.pixelsPerLonDegree_ = EUCLIDEAN_RANGE / 360;
-			this.pixelsPerLonRadian_ = EUCLIDEAN_RANGE / (2 * Math.PI);
-			this.scaleLat = 18;	// Height
+			var EUCLIDEAN_RANGE_X = 320;
+			var EUCLIDEAN_RANGE_Y = 256
+			this.pixelOrigin_ = new google.maps.Point(EUCLIDEAN_RANGE_X / 2, EUCLIDEAN_RANGE_Y / 2);
+			this.pixelsPerLatDegree_ = EUCLIDEAN_RANGE_Y / 360;
+			this.pixelsPerLatRadian_ = EUCLIDEAN_RANGE_Y / (2 * Math.PI);
+			this.pixelsPerLonDegree_ = EUCLIDEAN_RANGE_X / 360;
+			this.pixelsPerLonRadian_ = EUCLIDEAN_RANGE_X / (2 * Math.PI);
+			this.scaleLat = 14.4;	// Height
 			this.scaleLng = 18;	// Width
 			this.offsetLat = 0;	// Height
 			this.offsetLng = 0;	// Width
 		};
-		 
+
 		EuclideanProjection.prototype.fromLatLngToPoint = function(latLng, opt_point) {
 			var point = opt_point || new google.maps.Point(0, 0);
 			var origin = this.pixelOrigin_;
@@ -45,7 +48,7 @@ var feluccaMapType = new google.maps.ImageMapType(feluccaTypeOptions);
 			point.y = (origin.y + (-1 * latLng.lat() + this.offsetLat ) * this.scaleLat * this.pixelsPerLonDegree_);
 			return point;
 		};
-		 
+
 		EuclideanProjection.prototype.fromPointToLatLng = function(point) {
 			var me = this;
 			var origin = me.pixelOrigin_;
@@ -57,12 +60,12 @@ var feluccaMapType = new google.maps.ImageMapType(feluccaTypeOptions);
 function initialize() {
   feluccaMapType.projection = new EuclideanProjection();
 
-  var cLL = new google.maps.LatLng(2.5,0);
+  var cLL = new google.maps.LatLng(<?php include_once "api/functions.php"; list($lX,$lY) = convertToMC(2560,1598); echo $lY . "," . $lX; ?> );
 
   var mapOptions = {
     center: cLL,
-    zoom: 3,
-    backgroundColor: "#00314C",
+    zoom: 2,
+    backgroundColor: "#00314A",
     streetViewControl: false,
     mapTypeControlOptions: {
       mapTypeIds: ['felucca']
@@ -79,13 +82,14 @@ function initialize() {
 //  });
 
 <?php
-include_once "/home/zenvera/public_html/map/api/functions.php";
+include_once "api/functions.php";
 
 $x = intval($_GET['x']);
 $y = intval($_GET['y']);
 if (is_numeric($x) && is_numeric($y) && $x != 0 && $y != 0) {
 	placeMarker($x,$y,"marker","Location");
 }
+//placeMarker(0,0,"test","test");
 //placeTreasureMarkers();
 drawMoongates();
 ?>

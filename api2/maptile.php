@@ -22,7 +22,7 @@ $z = intval($_GET["z"]);
 if(!is_numeric($x)||!is_numeric($y)|!is_numeric($z))
 	return;
 
-$cache_root = "/home/zenvera/public_html/map/cache";
+$cache_root = "/home/zenvera/public_html/map2/cache";
 $cache_dir =  $cache_root . "/" . $z . "/" . $x;
 $cache = $cache_dir . "/" . $y . ".png";
 
@@ -31,15 +31,15 @@ if(!file_exists($cache_dir)) {
 }
 
 if(!file_exists($cache)) {
-	$tileX = 208;
-	$tileY = 208;
+	$tileX = 320;
+	$tileY = 256;
 
-	$img = imagecreatefrompng("/home/zenvera/public_html/img/facet-cropped-edgeclean-rotate-bluefill-indexed-padded.png");
+	$img = imagecreatefrompng("/home/zenvera/public_html/img/facet-cropped-edgeclean.png");
 	$resized = imagecreatetruecolor($tileX, $tileY);
-	if($z <= 5)
-		imagecopyresized($resized, $img, 0, 0, $x * ($tileX << (5-$z)), $y * ($tileY << (5-$z)), $tileX, $tileY, $tileX << (5-$z), $tileY << (5-$z));
+	if($z <= 4)
+		imagecopyresized($resized, $img, 0, 0, $x * ($tileX << (4-$z)), $y * ($tileY << (4-$z)), $tileX, $tileY, $tileX << (4-$z), $tileY << (4-$z));
 	else
-		imagecopyresized($resized, $img, 0, 0, $x * ($tileX >> ($z-5)), $y * ($tileY >> ($z-5)), $tileX, $tileY, $tileX >> ($z-5), $tileY >> ($z-5));
+		imagecopyresized($resized, $img, 0, 0, $x * ($tileX >> ($z-4)), $y * ($tileY >> ($z-4)), $tileX, $tileY, $tileX >> ($z-4), $tileY >> ($z-4));
 	imagepng($resized, $cache);
 }
 
