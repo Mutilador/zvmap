@@ -1,6 +1,6 @@
 <?php
 function convertToMC($x, $y) {
-	$x -= 2560; // Source Offsets
+	$x -= 3584; // Source Offsets
 	$y = 2048 - $y;
 
 	$rotate = sin(deg2rad(45));
@@ -24,7 +24,7 @@ function placeMarker($x, $y, $name, $text) {
 }
 
 function placeTreasureMarkers() {
-	$file = @fopen('/home/zenvera/public_html/map/api/treasures.txt', "r");
+	$file = @fopen('./api/treasures.txt', "r");
 
 	$index = 0;
 	while (!feof($file)) {

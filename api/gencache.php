@@ -2,9 +2,9 @@
 $tileX = 208;
 $tileY = 208;
 
-$img = imagecreatefrompng("/home/zenvera/public_html/img/facet-cropped-edgeclean-rotate-bluefill-indexed-padded.png");
+$img = imagecreatefrompng("./img/MAP0-1.png");
 
-$cache_root = "/home/zenvera/public_html/map/cache_test";
+$cache_root = "./map/cache_test";
 
 for($z=0; $z <= 7; $z++) {
  $range = 1 << $z;

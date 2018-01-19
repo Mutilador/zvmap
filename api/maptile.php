@@ -15,14 +15,39 @@ if (!function_exists('getallheaders'))
 	}
 }
 
+
+
 $x = intval($_GET["x"]);
 $y = intval($_GET["y"]);
 $z = intval($_GET["z"]);
+$map = intval($_GET["map"]);
+
+if($map == null)
+	$map = 0;
+
+$map_select = '';
+
+if($map == 0)
+{
+	$map_select = 'felucca';
+}else if ($map == 1)
+{
+	$map_select = 'trammel';
+}else if ($map == 2)
+{
+	$map_select = 'ilshenar';
+}else if ($map == 3)
+{
+	$map_select = 'malas';
+}else
+{
+	$map_select = 'tokuno';
+}
 
 if(!is_numeric($x)||!is_numeric($y)|!is_numeric($z))
 	return;
 
-$cache_root = "/home/zenvera/public_html/map/cache";
+$cache_root = "./map/cache/" . $map_select;
 $cache_dir =  $cache_root . "/" . $z . "/" . $x;
 $cache = $cache_dir . "/" . $y . ".png";
 
@@ -34,12 +59,24 @@ if(!file_exists($cache)) {
 	$tileX = 208;
 	$tileY = 208;
 
-	$img = imagecreatefrompng("/home/zenvera/public_html/img/facet-cropped-edgeclean-rotate-bluefill-indexed-padded.png");
+	$img = imagecreatefrompng("../img/" . $map_select . ".png");
 	$resized = imagecreatetruecolor($tileX, $tileY);
-	if($z <= 5)
-		imagecopyresized($resized, $img, 0, 0, $x * ($tileX << (5-$z)), $y * ($tileY << (5-$z)), $tileX, $tileY, $tileX << (5-$z), $tileY << (5-$z));
+        
+        $mapSize = 0;
+
+        if($map == 0 || $map == 1)
+        {
+            $mapSize = 6;
+        }elseif ($map == 2 || $map == 3) {
+            $mapSize = 4;
+        }elseif ( $map == 4) {
+            $mapSize = 3;
+        }  
+        
+	if($z <= $mapSize)
+		imagecopyresized($resized, $img, 0, 0, $x * ($tileX << ($mapSize-$z)), $y * ($tileY << ($mapSize-$z)), $tileX, $tileY, $tileX << ($mapSize-$z), $tileY << ($mapSize-$z));
 	else
-		imagecopyresized($resized, $img, 0, 0, $x * ($tileX >> ($z-5)), $y * ($tileY >> ($z-5)), $tileX, $tileY, $tileX >> ($z-5), $tileY >> ($z-5));
+		imagecopyresized($resized, $img, 0, 0, $x * ($tileX >> ($z-$mapSize)), $y * ($tileY >> ($z-$mapSize)), $tileX, $tileY, $tileX >> ($z-$mapSize), $tileY >> ($z-$mapSize));
 	imagepng($resized, $cache);
 }
 

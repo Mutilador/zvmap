@@ -1,0 +1,35 @@
+[{"id":
+    {"$oid":"590fdc64cb874ac34b7fb0a8"},
+    "name":"Felucca",
+        "x":4074,
+        "y":441,
+        "z":3,
+        "map":"1"},
+ {"id":
+    {"$oid":"590fdc64cb874ac34b7fb0aa"},
+    "name":"Trammel",
+        "x":2571,
+        "y":477,
+        "z":0,
+        "map":0},
+ {"id":
+    {"$oid":"590fdc64cb874ac34b7fb0aa"},
+    "name":"Ilshenar",
+        "x":300,
+        "y":300,
+        "z":0,
+        "map":2},
+ {"id":
+    {"$oid":"590fdc64cb874ac34b7fb0aa"},
+    "name":"Malas",
+        "x":250,
+        "y":250,
+        "z":0,
+        "map":3},
+{"id":
+    {"$oid":"590fdc64cb874ac34b7fb0aa"},
+    "name":"Tokuno",
+        "x":200,
+        "y":200,
+        "z":0,
+        "map":4}]
