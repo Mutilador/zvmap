@@ -39,9 +39,12 @@ if($map == 0)
 }else if ($map == 3)
 {
 	$map_select = 'malas';
-}else
+}else if ($map == 4)
 {
 	$map_select = 'tokuno';
+}else if ($map == 5)
+{
+	$map_select = 'termur';
 }
 
 if(!is_numeric($x)||!is_numeric($y)|!is_numeric($z))
@@ -71,7 +74,9 @@ if(!file_exists($cache)) {
             $mapSize = 4;
         }elseif ( $map == 4) {
             $mapSize = 3;
-        }  
+        }elseif ( $map == 5) {
+            $mapSize = 4;
+        }    
         
 	if($z <= $mapSize)
 		imagecopyresized($resized, $img, 0, 0, $x * ($tileX << ($mapSize-$z)), $y * ($tileY << ($mapSize-$z)), $tileX, $tileY, $tileX << ($mapSize-$z), $tileY << ($mapSize-$z));

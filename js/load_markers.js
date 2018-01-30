@@ -7,23 +7,50 @@ function setMapOnAll(map) {
   }
 }
 
-//Convert o x,y do UO para a latitude e longetude do google maps.
-function convertLatLongToUO(x, y, map)
-{
-    longUO = 0;
-    latUO = 0;    
-    if(map == "0" || map == "1")
-    {
-        longUO = -179.99999999-((-157.55556666/7168)*x);
-        latUO = 85.11000000-(((18.008079999/4096)*y)/2);
-    }else if (map == "2" || map == "3") {
+//google.maps.event.addDomListener(map, 'zoom_changed', function() {
+//  var zoom = map.getZoom();
+//  
+//});
         
-    }else if ( map == "4") {
-        
-    }     
+//google.maps.event.addDomListener(map, 'click', function(event){
+//   var proj = map.getProjection();
+//   console.log(proj.fromLatLngToPoint(new google.maps.LatLng(85.00000000,-180.00000000)));
+//   console.log(proj.fromLatLngToPoint(new google.maps.LatLng(56.20000000,-10.00000000)));
+//    //console.log(proj.fromPointToLatLng(new google.maps.Point(x,y)).lat());
+//    ///console.log(proj.fromPointToLatLng(new google.maps.Point(x,y)).lng());
+//});
 
-    return new google.maps.LatLng(latUO, longUO);
+//Convert o x,y do UO para a latitude e longetude do google maps.
+function convertLatLongToUO(xuo, yuo, mapuo)
+{
+    var proj = map.getProjection();
+        
+    var x = 0;
+    var y = 0;    
+    
+    if(mapuo == "0" || mapuo == "1")
+    {
+        x = (112.3555555555555/7168)*xuo;
+        y = (64.02365437241997/4096)*yuo;
+    }else if (mapuo == "2") {
+        x = (143.9288888888889/2304)*xuo;
+        y = (100.08664990702526/1600)*yuo;         
+    } else if (mapuo == "3") {
+        x = (160.00000000/2560)*xuo;
+        y = (128.00000000/2048)*yuo;    
+    }else if ( mapuo == "4") {
+        x = (208.-0000000/1448)*xuo;
+        y = (207.9495506023008/1448)*yuo; 
+    }else if ( mapuo == "5") {
+        x = (120.888888888888/1944)*xuo;
+        y = (79.46169542855448/1270)*yuo; 
+    }      
+
+    return proj.fromPointToLatLng(new google.maps.Point(x,y));
+
 }
+
+
 
 /*
     Carrega os pontos de todos os players no mapa.
@@ -47,11 +74,12 @@ function carregarPontos(mapTypeId) {
                 mapId = 3;
             }else if(mapTypeId == 'tokuno'){
                 mapId = 4;
+            }else if(mapTypeId == 'termur'){
+                mapId = 5;
             }
             
             if(mapId == ponto.map)
-            {
-                console.log(mapId);
+            {                
                 addPlayerMarker(index, ponto);
             }
             
@@ -63,8 +91,10 @@ function carregarPontos(mapTypeId) {
 }
 
 function addPlayerMarker(index, ponto){
+    var projection = map.getProjection()
     var marker_map = new google.maps.Marker({
         position: new convertLatLongToUO(ponto.x,ponto.y,ponto.map),
+        //position: new google.maps.LatLng(36.50000000,22.40000000),
         map: map,
         title: ponto.name,
     });
