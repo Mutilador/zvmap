@@ -123,8 +123,8 @@ function initialize() {
 
 	var mapOptions = {
 	center: cLL,
-	zoom: 6,
-	backgroundColor: "#000000",
+	zoom: 3,
+	backgroundColor: "#FFFFFF",
 	streetViewControl: false,
 	mapTypeControl: false,
 		mapTypeControlOptions: {
@@ -257,7 +257,7 @@ function displayCoordinates(pnt) {
           var lng = pnt.lng();
           lng = lng.toFixed(8);
           
-          //console.log("Latitude: " + lat + "  Longitude: " + lng);
+          console.log("Latitude: " + lat + "  Longitude: " + lng);
 }
       
 

@@ -2,7 +2,7 @@
 <html dir="ltr" lang="pt-BR"> 
   <head>
   <meta charset="UTF-8" /> 
-    <title>Ultima Online Brasil Map</title>
+    <title>Dragon Shard Map</title>
     <link href="default.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtrU1A1kK3ffpP_8fcQoOJfd6uQx0Lzt8"></script>
   </head>

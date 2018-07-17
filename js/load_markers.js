@@ -23,21 +23,22 @@ function setMapOnAll(map) {
 //Convert o x,y do UO para a latitude e longetude do google maps.
 function convertLatLongToUO(xuo, yuo, mapuo)
 {
-    var proj = map.getProjection();
-        
+    var zoom = map.getZoom();
     var x = 0;
     var y = 0;    
     
     if(mapuo == "0" || mapuo == "1")
     {
-        x = (112.3555555555555/7168)*xuo;
-        y = (64.02365437241997/4096)*yuo;
+        //x = (112.3555555555555/7168)*xuo;    
+        //y = (64.02365437241997/4096)*yuo;
+        x = -179.99999999+((157.5/7168)*xuo);
+        y = 85.04000000-(((17.1/4096)*yuo)/2);
     }else if (mapuo == "2") {
         x = (143.9288888888889/2304)*xuo;
         y = (100.08664990702526/1600)*yuo;         
     } else if (mapuo == "3") {
         x = (160.00000000/2560)*xuo;
-        y = (128.00000000/2048)*yuo;    
+        y = (128.00000000/2048)*yuo;
     }else if ( mapuo == "4") {
         x = (208.-0000000/1448)*xuo;
         y = (207.9495506023008/1448)*yuo; 
@@ -45,8 +46,11 @@ function convertLatLongToUO(xuo, yuo, mapuo)
         x = (120.888888888888/1944)*xuo;
         y = (79.46169542855448/1270)*yuo; 
     }      
-
-    return proj.fromPointToLatLng(new google.maps.Point(x,y));
+    
+    var markerLatLng = new google.maps.LatLng(y,x);
+    console.log("Xuo: "+xuo+" Lng: "+markerLatLng.lng());
+    console.log("Yuo: "+yuo+" Lat: "+markerLatLng.lat());
+    return markerLatLng;
 
 }
 
@@ -58,11 +62,12 @@ function convertLatLongToUO(xuo, yuo, mapuo)
 function carregarPontos(mapTypeId) {
     setMapOnAll(null);
     markers = [];
-    $.getJSON('tools/players.json', function(player) {
-
+    $.getJSON('tools/playersList.json', function(player) {
+        
         $.each(player, function(index, ponto) {
         		
             mapId = 0;
+            
             
             if(mapTypeId == 'trammel'){
                 mapId = 0;
@@ -93,7 +98,7 @@ function carregarPontos(mapTypeId) {
 function addPlayerMarker(index, ponto){
     var projection = map.getProjection()
     var marker_map = new google.maps.Marker({
-        position: new convertLatLongToUO(ponto.x,ponto.y,ponto.map),
+        position: convertLatLongToUO(ponto.x,ponto.y,ponto.map),
         //position: new google.maps.LatLng(36.50000000,22.40000000),
         map: map,
         title: ponto.name,
@@ -105,7 +110,7 @@ function addPlayerMarker(index, ponto){
             // Vari�vel que define a estrutura do HTML a inserir na Info Window.
             var iwContent = '<div id="iw_container">' +
                 '<div class="iw_title"><b>' + ponto.name + '</b></div>' +
-                 '<div class="iw_content"><br/><b>Posi��o: </b>' + ponto.x +', '+ponto.y+', '+ponto.z + ', ' +
+                 '<div class="iw_content"><br/><b>Posicao: </b>' + ponto.x +', '+ponto.y+', '+ponto.z + ', ' +
                 ponto.map + '<br /><br /><b>Str: </b>' + ponto.str + '</div><br />' +
                 '<b>Int: </b>' + ponto.int + '</div><br />' +
                 '<b>Dex: </b>' + ponto.dex + '</div><br />' +
